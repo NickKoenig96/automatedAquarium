@@ -46,7 +46,8 @@ void setup() {
   Serial.println(WiFi.dnsIP());
 }
 
-String test ="blabla";
+String line;
+
 
 void loop() {
   Serial.print("connecting to ");
@@ -75,11 +76,21 @@ void loop() {
   // Alles lezen en afprinten naar de seriele poort.
   // Merk op dat ook de antwoord headers worden afgedrukt!
   while(client.available()){
-    String line = client.readStringUntil('\n');
+    line = client.readStringUntil('\n');
     Serial.println(line);
-        Serial.println(test);
 
   }
+
+  if(line.toInt() == 1){
+            Serial.println("ochtendlicht");
+  }
+    if(line.toInt() == 2){
+            Serial.println("daglicht");
+  }
+    if(line.toInt() == 3){
+            Serial.println("nachtlicht");
+  }
+ 
 
   // De verbinding met de server sluiten 
   Serial.println();
