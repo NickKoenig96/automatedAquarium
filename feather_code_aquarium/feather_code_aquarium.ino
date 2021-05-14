@@ -99,13 +99,13 @@ void loop() {
 
   if(line.toInt() == 1){
             Serial.println("ochtendlicht");
-              RGB_color(255, 0, 0); // Red
+            RGB_color(255, 255, 0); // Yellow
   
               
   }
     if(line.toInt() == 2){
             Serial.println("daglicht");
-            RGB_color(0, 255, 0); // Green
+            RGB_color(0, 255, 255); // Cyan
 
   }
     if(line.toInt() == 3){
