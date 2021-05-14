@@ -36,7 +36,8 @@ if (!empty($_POST)) {
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var numberInput = document.querySelector('.status');
-          numberInput.value = this.responseText;
+          numberInput.value = parseInt(this.responseText);
+
         }
       };
       var data = document.querySelector('.status').value;
@@ -50,7 +51,7 @@ if (!empty($_POST)) {
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var numberInput = document.querySelector('.status');
-          numberInput.value = this.responseText;
+          numberInput.value = parseInt(this.responseText);
           setTimeout(getNumber, 1000);
         }
       };
@@ -67,19 +68,21 @@ if (!empty($_POST)) {
 </form>
 
 <form action="" method="post">
-    <input type="hidden" class="status" name="status" value="ochtendlicht">
+    <input type="hidden" class="status" name="status" value="1">
     <input type="submit" value="ochtendlicht">
 </form>
 
+<form action="" method="post">
+    <input type="hidden" class="status" name="status" value="2">
+    <input type="submit" value="daglicht">
+  </form>
+
   <form action="" method="post">
-    <input type="hidden" class="status" name="status" value="nachtlicht">
+    <input type="hidden" class="status" name="status" value="3">
     <input type="submit" value="nachtlicht">
   </form>
 
-    <form action="" method="post">
-    <input type="hidden" class="status" name="status" value="daglicht">
-    <input type="submit" value="daglicht">
-  </form>
+
 
 
 

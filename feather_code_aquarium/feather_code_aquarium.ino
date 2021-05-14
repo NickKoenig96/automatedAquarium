@@ -11,13 +11,18 @@ extern "C" {
 const char* ssid     = "WiFi-2.4-DF08";
 const char* password = "CCfw21z1Ag5R";
 
+
+int red_light_pin= 12;
+int green_light_pin = 14;
+int blue_light_pin = 15;
+
 //^5c[-:]cf[-:]7f[-:].*
 //Compileer problemen met onderstaande lijn? => 
 //Verander YY YY YY in onderstaande lijn door cijfers uit uw studenten nummer !!!
 uint8_t mac[6] {0x5C, 0xCF, 0x7F, 0x01, 0x09, 0x80};
 //voorbeeld studenten nummer r123456 geeft: uint8_t mac[6] {0x5C, 0xCF, 0x7F, 0x12, 0x34, 0x56};
 
-const char* host = "192.168.1.32";
+const char* host = "192.168.1.41";
 
 void setup() {
   Serial.begin(115200);
@@ -44,9 +49,20 @@ void setup() {
   Serial.println(WiFi.gatewayIP());
   Serial.print("De DNS is: ");
   Serial.println(WiFi.dnsIP());
+
+  pinMode(red_light_pin, OUTPUT);
+  pinMode(green_light_pin, OUTPUT);
+  pinMode(blue_light_pin, OUTPUT);
 }
 
 String line;
+
+void RGB_color(int red_light_value, int green_light_value, int blue_light_value)
+ {
+  analogWrite(red_light_pin, red_light_value);
+  analogWrite(green_light_pin, green_light_value);
+  analogWrite(blue_light_pin, blue_light_value);
+}
 
 
 void loop() {
@@ -83,18 +99,29 @@ void loop() {
 
   if(line.toInt() == 1){
             Serial.println("ochtendlicht");
+              RGB_color(255, 0, 0); // Red
+  
+              
   }
     if(line.toInt() == 2){
             Serial.println("daglicht");
+            RGB_color(0, 255, 0); // Green
+
   }
     if(line.toInt() == 3){
-            Serial.println("nachtlicht");
+            Serial.println("nachtlicht");  
+            RGB_color(0, 0, 255); // Blue
+
   }
+
+
+  
+
  
 
   // De verbinding met de server sluiten 
   Serial.println();
   Serial.println("closing connection");
   client.stop();
-  delay(30000);
+  delay(100);
 }
