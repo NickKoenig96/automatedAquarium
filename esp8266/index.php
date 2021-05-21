@@ -63,7 +63,7 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-<form action="" method="post">
+<!--<form action="" method="post">
     <input type="hidden" class="status" name="status" value="empty">
 </form>
 
@@ -80,7 +80,42 @@ if (!empty($_POST)) {
   <form action="" method="post">
     <input type="hidden" class="status" name="status" value="3">
     <input type="submit" value="nachtlicht">
+  </form> -->
+
+  <div id="light">
+
+<form action="" method="post">
+    <input type="hidden" class="status" name="status" value="empty">
+</form>
+
+<form action="" method="post">
+    <input type="hidden" class="status" name="status" value="1">
+    <input type="submit" value="Ochtendlicht">
+</form>
+
+<form action="" method="post">
+    <input type="hidden" class="status" name="status" value="2">
+    <input type="submit" value="Daglicht">
   </form>
+
+  <form action="" method="post">
+    <input type="hidden" class="status" name="status" value="3">
+    <input type="submit" value="Nachtlicht">
+  </form>
+  </div>
+
+  <div id="food">
+    <form action="" method="post">
+      <input type="hidden" class="status" name="status" value="4">
+      <input type="submit" value="Voederen">
+    </form>
+    <form action="" method="post">
+      <input type="hidden" class="status" name="status" value="5">
+      <input type="submit" value="reset">
+    </form>
+  </div>
+
+
 
 
 

@@ -1,4 +1,7 @@
 #include <ESP8266WiFi.h>
+#include <Servo.h>
+
+Servo myServo;
 
 //Call to ESpressif SDK
 extern "C" {
@@ -12,9 +15,12 @@ const char* ssid     = "WiFi-2.4-DF08";
 const char* password = "CCfw21z1Ag5R";
 
 
+
 int red_light_pin= 12;
 int green_light_pin = 14;
 int blue_light_pin = 15;
+
+
 
 //^5c[-:]cf[-:]7f[-:].*
 //Compileer problemen met onderstaande lijn? => 
@@ -22,11 +28,11 @@ int blue_light_pin = 15;
 uint8_t mac[6] {0x5C, 0xCF, 0x7F, 0x01, 0x09, 0x80};
 //voorbeeld studenten nummer r123456 geeft: uint8_t mac[6] {0x5C, 0xCF, 0x7F, 0x12, 0x34, 0x56};
 
-const char* host = "192.168.1.41";
+const char* host = "192.168.1.36";
 
 void setup() {
   Serial.begin(115200);
-  Serial.println();
+ // Serial.println();
   
   //De volgende lijn veranderd het MAC adres van de ESP8266
   wifi_set_macaddr(0, const_cast<uint8*>(mac)); 
@@ -53,9 +59,13 @@ void setup() {
   pinMode(red_light_pin, OUTPUT);
   pinMode(green_light_pin, OUTPUT);
   pinMode(blue_light_pin, OUTPUT);
+
+   myServo.attach(4);
 }
 
-String line;
+String btn_light;
+ 
+int clicked = 0;
 
 void RGB_color(int red_light_value, int green_light_value, int blue_light_value)
  {
@@ -63,6 +73,8 @@ void RGB_color(int red_light_value, int green_light_value, int blue_light_value)
   analogWrite(green_light_pin, green_light_value);
   analogWrite(blue_light_pin, blue_light_value);
 }
+
+
 
 
 void loop() {
@@ -92,32 +104,54 @@ void loop() {
   // Alles lezen en afprinten naar de seriele poort.
   // Merk op dat ook de antwoord headers worden afgedrukt!
   while(client.available()){
-    line = client.readStringUntil('\n');
-    Serial.println(line);
+    btn_light = client.readStringUntil('\n');
+    Serial.println(btn_light);
 
   }
 
-  if(line.toInt() == 1){
+              myServo.write(0); 
+
+
+  if(btn_light.toInt() == 1){
             Serial.println("ochtendlicht");
             RGB_color(255, 255, 0); // Yellow
-  
+    
+        
+    }  
               
-  }
-    if(line.toInt() == 2){
+ 
+    if(btn_light.toInt() == 2){
             Serial.println("daglicht");
             RGB_color(0, 255, 255); // Cyan
 
   }
-    if(line.toInt() == 3){
+    if(btn_light.toInt() == 3){
             Serial.println("nachtlicht");  
             RGB_color(0, 0, 255); // Blue
 
   }
 
 
-  
+   if(btn_light.toInt() == 4){
+    if( clicked == 0){
+       Serial.println("voederen"); 
+             // Make servo go to 0 degrees 
+            myServo.write(180); 
+            delay(500); 
+           
+    }
+           
+            
+  }
 
- 
+     if(btn_light.toInt() == 5){
+            Serial.println("reset"); 
+             // Make servo go to 0 degrees 
+            myServo.write(0); 
+            delay(500); 
+            
+  }
+
 
   // De verbinding met de server sluiten 
   Serial.println();
